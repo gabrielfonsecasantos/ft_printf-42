@@ -1,4 +1,5 @@
 #include "ft_printf.h"
+#include <stdio.h>
 
 int ft_strlen(char  *s)
 {
@@ -8,6 +9,22 @@ int ft_strlen(char  *s)
   while (s[counter])
     counter++;
   return (counter);
+}
+
+void  ft_putnbr(int n)
+{
+  long  num;
+
+  num = n;
+  if (num < 0)
+  {
+    num *= -1;
+    write(1, "-", 1);
+  }
+  if (num >= 10)
+    ft_putnbr(num / 10);
+  num = (num % 10) + '0';
+  write(1, &num, 1);
 }
 
 int ft_printf(const char *str, ...)
@@ -35,10 +52,9 @@ int ft_printf(const char *str, ...)
         write(1, s, ft_strlen(s));
       }
       // checks if the conversion is to an int
-      if (*str == 'd')
+      if (*str == 'i')
       {
-        c = va_arg(list, int) + '0';
-        write(1, &c, 1);  
+        ft_putnbr(va_arg(list, int));  
       }
       // checks if is necessary to print a % sign
       if (*str == '%')
@@ -59,6 +75,8 @@ int ft_printf(const char *str, ...)
 
 int main(void)
 {
-  ft_printf("%s, %c, %d, %%.", "alou", 'a', 1);
+  ft_printf("%s, %c, %i, %%.", "alou", 'a', 2147483647);
+  printf("\n");
+  printf("%s, %c, %i, %%.", "alou", 'a', 2147483647);
   return (0);
 }
