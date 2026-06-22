@@ -27,11 +27,26 @@ void  ft_putnbr(int n)
   write(1, &num, 1);
 }
 
+void  ft_putfloat(float n)
+{
+  long  intPart;
+  float  deciPart;
+  long  temp;
+
+  temp = n / 1;
+  intPart = temp;
+  deciPart = (n - temp);
+  ft_putnbr(intPart);
+  write(1, ".", 1);
+  ft_putnbr(deciPart);
+}
+
 int ft_printf(const char *str, ...)
 {
   va_list list;
   char  c;
   char  *s;
+  float f;
 
   va_start(list, str);
   while(*str)
@@ -53,14 +68,15 @@ int ft_printf(const char *str, ...)
       }
       // checks if the conversion is to an int
       if (*str == 'i')
+        ft_putnbr(va_arg(list, int)); 
+      if (*str == 'u')
       {
-        ft_putnbr(va_arg(list, int));  
-      }
+        f = va_arg(list, double);
+        ft_putfloat(f);
+      } 
       // checks if is necessary to print a % sign
       if (*str == '%')
-      {
         write (1, "%", 1);
-      }
       str++;
     } else 
     {
@@ -75,8 +91,8 @@ int ft_printf(const char *str, ...)
 
 int main(void)
 {
-  ft_printf("%s, %c, %i, %%.", "alou", 'a', 2147483647);
+  ft_printf("%s, %c, %i, %u.", "alou", 'a', 2147483647, 1.50);
   printf("\n");
-  printf("%s, %c, %i, %%.", "alou", 'a', 2147483647);
+  printf("%s, %c, %i, %f.", "alou", 'a', 2147483647, 1.50);
   return (0);
 }
