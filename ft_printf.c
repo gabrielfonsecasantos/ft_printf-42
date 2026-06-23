@@ -1,5 +1,6 @@
 #include "ft_printf.h"
 #include <stdio.h>
+#include <limits.h>
 
 int ft_strlen(char  *s)
 {
@@ -27,6 +28,24 @@ void  ft_putnbr(int n)
   write(1, &num, 1);
 }
 
+void decimalConversion(float deciPart)
+{
+  int precision;
+  char digit;
+  int numDigit;
+
+  precision = 0;
+  while (precision < 6)
+  {
+    deciPart *= 10;
+    numDigit = (int)deciPart;
+    digit = numDigit + '0';
+    write(1, &digit, 1);
+    precision++; 
+    deciPart -= numDigit;  
+  }
+}
+
 void  ft_putfloat(float n)
 {
   long  intPart;
@@ -38,7 +57,7 @@ void  ft_putfloat(float n)
   deciPart = (n - temp);
   ft_putnbr(intPart);
   write(1, ".", 1);
-  ft_putnbr(deciPart);
+  decimalConversion(deciPart);
 }
 
 int ft_printf(const char *str, ...)
@@ -69,6 +88,7 @@ int ft_printf(const char *str, ...)
       // checks if the conversion is to an int
       if (*str == 'i')
         ft_putnbr(va_arg(list, int)); 
+      // checks if the conversion is to a float
       if (*str == 'u')
       {
         f = va_arg(list, double);
@@ -91,8 +111,8 @@ int ft_printf(const char *str, ...)
 
 int main(void)
 {
-  ft_printf("%s, %c, %i, %u.", "alou", 'a', 2147483647, 1.50);
+  ft_printf("%s, %c, %i, %u.", "alou", 'a', 2147483647, 0.005);
   printf("\n");
-  printf("%s, %c, %i, %f.", "alou", 'a', 2147483647, 1.50);
+  printf("%s, %c, %i, %f.", "alou", 'a', 2147483647, 0.005);
   return (0);
 }
