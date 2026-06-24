@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/24 13:23:21 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/24 13:38:16 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,16 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str == '%')
 		{
-			ret = ft_formatter((char *)++str, list);
+			ret += ft_formatter((char *)++str, list);
 			if (ret == -1)
 				return (-1);
 			str++;
 		}
 		else
 		{
-			ret = ft_putchar(*str);
+			ret += ft_putchar(*str);
+			if (ret == -1)
+				return (-1);
 			str++;
 		}
 	}
@@ -104,7 +106,7 @@ int	ft_printf(const char *str, ...)
 	return (counter + ret);
 }
 
-int	main(void)
+/*int	main(void)
 {
 	unsigned int	a;
 
@@ -113,4 +115,4 @@ int	main(void)
 	printf("\n");
 	printf("%s, %c, %i, %X.", "alou", 'a', -214748364, 255);
 	return (0);
-}
+}*/
