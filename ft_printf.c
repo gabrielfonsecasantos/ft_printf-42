@@ -6,7 +6,7 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/24 16:20:09 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/24 16:27:07 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,22 @@ int	ft_formatter(char *str, va_list list)
 	ret = 0;
 	if (*str == 'c')
 		ret = ft_putchar(va_arg(list, int));
-	if (*str == 's')
+	else if (*str == 's')
 		ret = ft_putstr(va_arg(list, char *));
-	if (*str == 'p')
+	else if (*str == 'p')
 		ret = ft_putptr(va_arg(list, void *));
-	if (*str == 'i' || *str == 'd')
+	else if (*str == 'i' || *str == 'd')
 		ret = ft_putnbr(va_arg(list, int));
-	if (*str == 'u')
+	else if (*str == 'u')
 		ret = ft_putnbr_unsigned(va_arg(list, unsigned int));
-	if (*str == 'x')
+	else if (*str == 'x')
 		ret = ft_putnbr_hex(va_arg(list, unsigned int), 0);
-	if (*str == 'X')
+	else if (*str == 'X')
 		ret = ft_putnbr_hex(va_arg(list, unsigned int), 1);
-	if (*str == '%')
+	else if (*str == '%')
 		ret = write(1, "%", 1);
+	else
+		ret = -1;
 	return (ret);
 }
 
@@ -74,11 +76,10 @@ int	ft_printf(const char *str, ...)
 
 /*int	main(void)
 {
-	unsigned int	a;
+	unsigned int a;
 
 	a = 3000000000;
-	ft_printf("%s, %c, %i, %X.", "alou", '0', -214748364, 255);
+	ft_printf("%t, %c, %i, %X.", "alou", '0', -214748364, 255);
 	printf("\n");
-	printf("%s, %c, %i, %X.", "alou", 'a', -214748364, 255);
 	return (0);
 }*/
