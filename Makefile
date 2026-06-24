@@ -6,7 +6,7 @@
 #    By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/05/25 15:06:21 by gviniciu          #+#    #+#              #
-#    Updated: 2026/06/22 12:32:11 by gabriel          ###   ########.fr        #
+#    Updated: 2026/06/23 17:14:38 by gabriel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC := cc
 
 CFLAGS := -Wall -Wextra -Werror
 
-SRCS := ft_printf.c
+SRCS := ft_printf.c ft_helper_functions.c
 
 # Object files
 OBJS = $(SRCS:.c=.o)

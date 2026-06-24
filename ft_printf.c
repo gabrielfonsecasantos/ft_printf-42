@@ -6,42 +6,23 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/23 16:54:54 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/24 13:23:21 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <limits.h>
 #include <stdio.h>
 
-static int	ft_strlen(char *s)
+int			ft_strlen(char *s);
+int			ft_putnbr(int n);
+int			ft_putstr(char *str);
+int			ft_putchar(char c);
+
+/*static int	ft_putptr(void *ptr)
 {
-	int	counter;
-
-	counter = 0;
-	while (s[counter])
-		counter++;
-	return (counter);
+	return (0);
 }
-
-static int	ft_putnbr(int n)
-{
-	long	num;
-	int		len;
-
-	num = n;
-	len = 0;
-	if (num < 0)
-	{
-		num *= -1;
-		len += write(1, "-", 1);
-	}
-	if (num >= 10)
-		len += ft_putnbr(num / 10);
-	num = (num % 10) + '0';
-	len += write(1, &num, 1);
-	return (len);
-}
+*/
 
 static int	ft_putnbr_unsigned(unsigned int num)
 {
@@ -74,56 +55,56 @@ static int	ft_putnbr_hex(unsigned int n, int u)
 	return (len);
 }
 
+int	ft_formatter(char *str, va_list list)
+{
+	int	ret;
+
+	if (*str == 'c')
+		ret = ft_putchar(va_arg(list, int));
+	if (*str == 's')
+		ret = ft_putstr(va_arg(list, char *));
+	if (*str == 'i' || *str == 'd')
+		ret = ft_putnbr(va_arg(list, int));
+	if (*str == 'u')
+		ret = ft_putnbr_unsigned(va_arg(list, unsigned int));
+	if (*str == 'x')
+		ret = ft_putnbr_hex(va_arg(list, unsigned int), 0);
+	if (*str == 'X')
+		ret = ft_putnbr_hex(va_arg(list, unsigned int), 1);
+	if (*str == '%')
+		ret = write(1, "%", 1);
+	return (ret);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	va_list	list;
-	char	c;
-	char	*s;
 	int		counter;
+	int		ret;
 
 	counter = 0;
+	ret = 0;
 	va_start(list, str);
 	while (*str)
 	{
 		if (*str == '%')
 		{
-			str++;
-			if (*str == 'c')
-			{
-				c = va_arg(list, int);
-				counter += write(1, &c, 1);
-			}
-			if (*str == 's')
-			{
-				s = va_arg(list, char *);
-				if (!s)
-					s = "(null)";
-				counter += write(1, s, ft_strlen(s));
-			}
-			if (*str == 'i' || *str == 'd')
-				counter += ft_putnbr(va_arg(list, int));
-			if (*str == 'u')
-				counter += ft_putnbr_unsigned(va_arg(list, unsigned int));
-			if (*str == 'x')
-				counter += ft_putnbr_hex(va_arg(list, unsigned int), 0);
-			if (*str == 'X')
-				counter += ft_putnbr_hex(va_arg(list, unsigned int), 1);
-			if (*str == '%')
-				counter += write(1, "%", 1);
+			ret = ft_formatter((char *)++str, list);
+			if (ret == -1)
+				return (-1);
 			str++;
 		}
 		else
 		{
-			c = *str;
-			counter += write(1, &c, 1);
+			ret = ft_putchar(*str);
 			str++;
 		}
 	}
 	va_end(list);
-	return (counter);
+	return (counter + ret);
 }
 
-/*int	main(void)
+int	main(void)
 {
 	unsigned int	a;
 
@@ -133,4 +114,3 @@ int	ft_printf(const char *str, ...)
 	printf("%s, %c, %i, %X.", "alou", 'a', -214748364, 255);
 	return (0);
 }
-*/
