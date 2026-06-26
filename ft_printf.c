@@ -6,21 +6,11 @@
 /*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/24 16:27:07 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/26 10:47:37 by gabriel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
-
-int	ft_strlen(char *s);
-int	ft_putnbr(int n);
-int	ft_putstr(char *str);
-int	ft_putchar(char c);
-int	ft_putptr_hex(unsigned long num);
-int	ft_putptr(void *ptr);
-int	ft_putnbr_unsigned(unsigned int num);
-int	ft_putnbr_hex(unsigned int n, int u);
 
 int	ft_formatter(char *str, va_list list)
 {
@@ -81,5 +71,7 @@ int	ft_printf(const char *str, ...)
 	a = 3000000000;
 	ft_printf("%t, %c, %i, %X.", "alou", '0', -214748364, 255);
 	printf("\n");
+
+
 	return (0);
 }*/
