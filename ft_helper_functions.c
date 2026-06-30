@@ -6,7 +6,7 @@
 /*   By: gviniciu <gviniciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 15:59:55 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/30 15:47:26 by gviniciu         ###   ########.fr       */
+/*   Updated: 2026/06/30 18:22:25 by gviniciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	ft_putptr(void *ptr)
 	len = 0;
 	addr = (unsigned long)ptr;
 	len = ft_putstr("0x");
+	if (len == -1)
+		return (-1);
 	ret = ft_putptr_hex(addr);
 	if (ret == -1)
 		return (-1);
@@ -99,7 +101,7 @@ int	ft_putnbr_unsigned(unsigned int num)
 		if (ret == -1)
 			return (-1);
 		len += ret;
-	}	
+	}
 	num = (num % 10) + '0';
 	ret = ft_putchar(num);
 	if (ret == -1)

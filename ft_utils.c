@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gviniciu <gviniciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 17:13:57 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/26 10:48:52 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/30 19:15:56 by gviniciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,28 @@ int	ft_putnbr(int n)
 {
 	long	num;
 	int		len;
+	int		ret;
 
 	num = n;
 	len = 0;
 	if (num < 0)
 	{
 		num *= -1;
-		len += ft_putchar('-');
+		if (ft_putchar('-') == -1)
+			return (-1);
+		len++;
 	}
 	if (num >= 10)
-		len += ft_putnbr(num / 10);
-	num = (num % 10) + '0';
-	len += ft_putchar(num);
+	{
+		ret = ft_putnbr(num / 10);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}
+	ret = ft_putchar((num % 10) + '0');
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
 

@@ -1,19 +1,17 @@
 *This project has been created as part
 of the 42 curriculum by gviniciu*
 
-# ft_printf
-
-The goal of this project is to recode the classic C's printf() function. Doing so, the objetive is to learn about variadic functions, wich is a function with a variable number of arguments. 
-
 ## Description
 
-`ft_printf()` imitates the behaviour of the original printf(). 
+# ft_printf
 
+The goal of this project is to recode the classic C's printf() function. Doing so, the objetive is to learn about variadic functions, wich are functions with a variable number of arguments. 
+ 
 ### How it works: 
 
 The function iterates over the format string. Plain characters are written directly to standard output. When it finds a % sign, it reads the next character to identify the conversion, then it consumes the matching argument from the variadic list, converts that argument to its text representation, and writes that text to standard output.
 
-Return Value: it also returns the numbers od characters printed, just like printf().
+Return Value: it also returns the numbers of characters printed, just like printf().
 
 ### Supported conversions
 
@@ -120,6 +118,10 @@ There is **no heavy data structure** in this project, since the decision was to 
 - If it **is** `%`, the next character is read and passed to a dispatcher (`ft_formatter`) that decides which conversion function to call.
 
 Each conversion function returns the **number of bytes it wrote**, and `ft_printf` accumulates that into a running counter, which becomes the return value. Every helper returns its own length wich keeps the character count correct without a separate counting pass.
+
+### Error Handling
+
+Every function call returns -1 when it fails, just like `printf()` does when it finds an error. 
 
 ### Number conversion by recursion
 

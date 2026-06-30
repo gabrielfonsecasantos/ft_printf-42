@@ -6,7 +6,7 @@
 /*   By: gviniciu <gviniciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/30 14:41:45 by gviniciu         ###   ########.fr       */
+/*   Updated: 2026/06/30 19:18:30 by gviniciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,3 @@ int	ft_printf(const char *str, ...)
 	va_end(list);
 	return (counter);
 }
-
-/*int	main(void)
-{
-	unsigned int a;
-
-	a = 3000000000;
-	ft_printf("%t, %c, %i, %X.", "alou", '0', -214748364, 255);
-	printf("\n");
-
-
-	return (0);
-}*/
