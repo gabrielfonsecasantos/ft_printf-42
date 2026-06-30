@@ -3,39 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gviniciu <gviniciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 12:31:52 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/26 10:47:37 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/30 14:41:45 by gviniciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_formatter(char *str, va_list list)
+int	ft_formatter(char c, va_list *list)
 {
-	int	ret;
-
-	ret = 0;
-	if (*str == 'c')
-		ret = ft_putchar(va_arg(list, int));
-	else if (*str == 's')
-		ret = ft_putstr(va_arg(list, char *));
-	else if (*str == 'p')
-		ret = ft_putptr(va_arg(list, void *));
-	else if (*str == 'i' || *str == 'd')
-		ret = ft_putnbr(va_arg(list, int));
-	else if (*str == 'u')
-		ret = ft_putnbr_unsigned(va_arg(list, unsigned int));
-	else if (*str == 'x')
-		ret = ft_putnbr_hex(va_arg(list, unsigned int), 0);
-	else if (*str == 'X')
-		ret = ft_putnbr_hex(va_arg(list, unsigned int), 1);
-	else if (*str == '%')
-		ret = write(1, "%", 1);
-	else
-		ret = -1;
-	return (ret);
+	if (c == 'c')
+		return (ft_putchar(va_arg(*list, int)));
+	else if (c == 's')
+		return (ft_putstr(va_arg(*list, char *)));
+	else if (c == 'p')
+		return (ft_putptr(va_arg(*list, void *)));
+	else if (c == 'i' || c == 'd')
+		return (ft_putnbr(va_arg(*list, int)));
+	else if (c == 'u')
+		return (ft_putnbr_unsigned(va_arg(*list, unsigned int)));
+	else if (c == 'x')
+		return (ft_putnbr_hex(va_arg(*list, unsigned int), 0));
+	else if (c == 'X')
+		return (ft_putnbr_hex(va_arg(*list, unsigned int), 1));
+	else if (c == '%')
+		return (write(1, "%", 1));
+	return (-1);
 }
 
 int	ft_printf(const char *str, ...)
@@ -44,12 +39,14 @@ int	ft_printf(const char *str, ...)
 	int		counter;
 	int		ret;
 
+	if (!str)
+		return (-1);
 	counter = 0;
 	va_start(list, str);
 	while (*str)
 	{
 		if (*str == '%')
-			ret = ft_formatter((char *)++str, list);
+			ret = ft_formatter(*(++str), &list);
 		else
 			ret = ft_putchar(*str);
 		if (ret == -1)

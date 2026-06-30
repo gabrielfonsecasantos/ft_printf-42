@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_helper_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabriel <gabriel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gviniciu <gviniciu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 15:59:55 by gabriel           #+#    #+#             */
-/*   Updated: 2026/06/26 10:47:21 by gabriel          ###   ########.fr       */
+/*   Updated: 2026/06/30 15:47:26 by gviniciu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,17 @@ int	ft_putstr(char *str);
 int	ft_putnbr_hex(unsigned int n, int u)
 {
 	int		len;
+	int		ret;
 	char	c;
 
 	len = 0;
 	if (n >= 16)
-		len += ft_putnbr_hex(n / 16, u);
+	{
+		ret = ft_putnbr_hex(n / 16, u);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}
 	c = n % 16;
 	if (c < 10)
 		c = c + '0';
@@ -30,48 +36,74 @@ int	ft_putnbr_hex(unsigned int n, int u)
 		c = c - 10 + 'A';
 	else
 		c = c - 10 + 'a';
-	len += ft_putchar(c);
+	ret = ft_putchar(c);
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
 
 int	ft_putptr_hex(unsigned long num)
 {
 	int		len;
+	int		ret;
 	char	c;
 
 	len = 0;
 	if (num >= 16)
-		len += ft_putptr_hex(num / 16);
+	{
+		ret = ft_putptr_hex(num / 16);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}
 	c = num % 16;
 	if (c < 10)
 		c = c + '0';
 	else
 		c = c - 10 + 'a';
-	len += ft_putchar(c);
+	ret = ft_putchar(c);
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
 
 int	ft_putptr(void *ptr)
 {
 	int				len;
+	int				ret;
 	unsigned long	addr;
 
 	if (!ptr)
 		return (ft_putstr("(nil)"));
+	len = 0;
 	addr = (unsigned long)ptr;
 	len = ft_putstr("0x");
-	len += ft_putptr_hex(addr);
+	ret = ft_putptr_hex(addr);
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
 
 int	ft_putnbr_unsigned(unsigned int num)
 {
 	int	len;
+	int	ret;
 
 	len = 0;
 	if (num >= 10)
-		len += ft_putnbr_unsigned(num / 10);
+	{
+		ret = ft_putnbr_unsigned(num / 10);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}	
 	num = (num % 10) + '0';
-	len += ft_putchar(num);
+	ret = ft_putchar(num);
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
